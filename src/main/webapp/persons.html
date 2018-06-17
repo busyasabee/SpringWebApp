@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Persons</title>
+    <script src="lib/jquery-3.3.1.min.js"></script>
+    <script src="persons.js"></script>
 </head>
 <body>
 <form id="personform" name="personform">
@@ -25,8 +27,10 @@
         </tr>
         <tr>
             <td>Дата рождения:</td>
-            <td><input type="date" name="date" /></td>
+            <td><input type="dateBirth" name="dateBirth" /></td>
         </tr>
+        <!--<input id="comment" type="hidden" value="">-->
+        <!--<input id="update_date" type="hidden" value="">-->
         <tr>
             <td><input id="addbtn" type="submit" value="Добавить" /></td>
         </tr>
@@ -41,5 +45,6 @@
         </tr>
     </table>
 </form>
+<div id="postResultDiv"></div>
 </body>
 </html>
