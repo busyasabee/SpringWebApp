@@ -1,26 +1,60 @@
 package com.dmitrromashov.model;
 
+import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 
+@Entity
+@Table(name = "person")
 public class Person {
+    @Id
+    @Column(name="id")
     private int ID;
-    private String surname;
-    private String name;
-    private String patronymic;
-    private Date dateBirth;
+    @Column(name="last_name")
+    private String lastName;
+    @Column(name="first_name")
+    private String firstName;
+    @Column(name="middle_name")
+    private String middleName;
+    @Column(name="birth_date")
+    private Date birthDate;
+    // Можно бы было сделать отдельную сущность PersonDb для работы с базой
+    // но это бы могло вносить путаницу
+    @Column(name="comment")
+    private String comment;
+    @Column(name="update_date")
+    private Timestamp updateDate;
 
     public Person(){
 
     }
 
-    public Person(int ID, String surname, String name, String patronymic, Date dateBirth) {
+    public Person(int ID, String lastName, String firstName, String middleName, Date birthDate, String comment, Timestamp updateDate) {
         this.ID = ID;
-        this.surname = surname;
-        this.name = name;
-        this.patronymic = patronymic;
-        this.dateBirth = dateBirth;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.birthDate = birthDate;
+        this.comment = comment;
+        this.updateDate = updateDate;
     }
 
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Timestamp getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Timestamp updateDate) {
+        this.updateDate = updateDate;
+    }
 
     public int getID() {
         return ID;
@@ -30,46 +64,60 @@ public class Person {
         this.ID = ID;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getPatronymic() {
-        return patronymic;
+    public String getMiddleName() {
+        return middleName;
     }
 
-    public void setPatronymic(String patronymic) {
-        this.patronymic = patronymic;
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
     }
 
-    public Date getDateBirth() {
-        return dateBirth;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setDateBirth(Date dateBirth) {
-        this.dateBirth = dateBirth;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
     @Override
     public String toString() {
         return "Person{" +
-                "ID='" + ID + '\'' +
-                ", surname='" + surname + '\'' +
-                ", name='" + name + '\'' +
-                ", patronymic='" + patronymic + '\'' +
-                ", dateBirth='" + dateBirth + '\'' +
+                "ID=" + ID +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", birthDate=" + birthDate +
+                ", comment='" + comment + '\'' +
+                ", updateDate=" + updateDate +
+                '}';
+    }
+
+    public String toJSON(){
+        return "{" +
+                "\"ID\": \"" + ID + '\"' +
+                ", \"lastName\": \"" + lastName + '\"' +
+                ", \"firstName\": \"" + firstName + '\"' +
+                ", \"middleName\": \"" + middleName + '\"' +
+                ", \"birthDate\": \"" + birthDate + '\"' +
+                ", \"comment\": \"" + comment + '\"' +
+                ", \"updateDate\": \"" + updateDate + '\"' +
                 '}';
     }
 }

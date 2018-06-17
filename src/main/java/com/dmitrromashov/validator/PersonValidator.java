@@ -18,9 +18,9 @@ public class PersonValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         Person person = (Person) o;
-        String personName = person.getName();
-        String personSurname = person.getSurname();
-        String personPatronymic = person.getPatronymic();
+        String personName = person.getFirstName();
+        String personSurname = person.getLastName();
+        String personPatronymic = person.getMiddleName();
         String[] fields = new String[]{personName, personSurname, personPatronymic};
         Pattern fioPattern = Pattern.compile("^[а-яА-Я]+$");
         Matcher nameMatcher = fioPattern.matcher(personName);

@@ -1,4 +1,4 @@
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 
     $('#addbtn').on('click', function () {
         event.preventDefault();
@@ -7,8 +7,9 @@ jQuery(document).ready(function($) {
         for (var i = 0; i < formArray.length; i++) {
             returnArray[formArray[i]['name']] = formArray[i]['value'];
         }
-        console.info(JSON.stringify(returnArray));
-        var postResult;
+
+        var id = $('#id').val();
+
         $.ajax({
             headers: {
                 'Accept': 'application/json',
@@ -18,22 +19,114 @@ jQuery(document).ready(function($) {
             type: 'POST',
             url: '/persons',
             success: function (data) {
-                console.log('Submission was successful.');
-                console.log(data);
-                $("#postResultDiv").html("<p> Добавлен пользователь с ID " +
-                    + data.id//["ID"]
-                    + ", фамилией " + data.surname
-                    + ", именем " + data.name
-                    + ", отчеством " + data.patronymic
-                    + ", датой рождения " + data.dateBirth);
-                console.log('name = ' + data["name"]);
+                if (data.hasOwnProperty("id_error")){
+                    $("#resultDiv").html(" <p> Пользователь с таким ID уже существует</p>");
+                } else {
+                    $("#resultDiv").html("  <p> Успешно добавлен пользователь с ID = " + id + " </p>");
+                }
             },
             error: function (data) {
-                console.log('An error occurred.');
+                console.log('An error occurred');
                 console.log(data);
             }
 
         })
 
+    });
+    $('#getbtn').on('click', function () {
+        event.preventDefault();
+
+        var id = $('#id').val();
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data: {},
+            type: 'GET',
+            url: '/persons/' + id,
+            success: function (data) {
+                if (data.hasOwnProperty("id_error")){
+                    $("#resultDiv").html(" <p> Нет пользователя с таким ID </p>");
+                } else {
+                    $("#resultDiv").html("  <p> Успешно получен пользователь с ID " +
+                        + id
+                        + ", фамилией " + data.lastName
+                        + ", именем " + data.firstName
+                        + ", отчеством " + data.middleName
+                        + ", датой рождения " + data.birthDate + " </p>");
+                }
+
+            },
+            error: function (data) {
+                console.log('An error occurred');
+                console.log(data);
+            }
+
+        })
+    });
+
+    $('#updatebtn').on('click', function () {
+        event.preventDefault();
+        var returnArray = {};
+        var formArray = $('#personform').serializeArray();
+        for (var i = 0; i < formArray.length; i++) {
+            returnArray[formArray[i]['name']] = formArray[i]['value'];
+        }
+
+        var id = $('#id').val();
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(returnArray),
+            type: 'PUT',
+            url: '/persons/' + id,
+            success: function (data) {
+                if (data.hasOwnProperty("id_error")){
+                    $("#resultDiv").html(" <p> Нет пользователя с таким ID </p>");
+                } else {
+                    $("#resultDiv").html("<p> Успешно обновлён пользователь с ID = " + id  + "</p>");
+                }
+            },
+            error: function (data) {
+                console.log('An error occurred');
+                console.log(data);
+            }
+
+        })
+
+    });
+
+    $('#deletebtn').on('click', function () {
+        event.preventDefault();
+
+        var id = $('#id').val();
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data: {},
+            type: 'DELETE',
+            url: '/persons/' + id,
+            success: function (data) {
+                if (data.hasOwnProperty("id_error")){
+                    $("#resultDiv").html(" <p> Нет пользователя с таким ID </p>");
+                } else {
+                    $("#resultDiv").html("<p> Успешно удалён пользователь с ID = " + id + "</p>");
+                }
+
+            },
+            error: function (data) {
+                console.log('An error occurred');
+                console.log(data);
+            }
+
+        })
     });
 });
