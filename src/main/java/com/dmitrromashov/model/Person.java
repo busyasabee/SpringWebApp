@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 public class Person {
     @Id
     @Column(name="id")
-    private int ID;
+    private int personId;
     @Column(name="last_name")
     private String lastName;
     @Column(name="first_name")
@@ -29,8 +29,8 @@ public class Person {
 
     }
 
-    public Person(int ID, String lastName, String firstName, String middleName, Date birthDate, String comment, Timestamp updateDate) {
-        this.ID = ID;
+    public Person(int personId, String lastName, String firstName, String middleName, Date birthDate, String comment, Timestamp updateDate) {
+        this.personId = personId;
         this.lastName = lastName;
         this.firstName = firstName;
         this.middleName = middleName;
@@ -56,12 +56,12 @@ public class Person {
         this.updateDate = updateDate;
     }
 
-    public int getID() {
-        return ID;
+    public int getPersonId() {
+        return personId;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setPersonId(int personId) {
+        this.personId = personId;
     }
 
     public String getLastName() {
@@ -99,7 +99,7 @@ public class Person {
     @Override
     public String toString() {
         return "Person{" +
-                "ID=" + ID +
+                "personId=" + personId +
                 ", lastName='" + lastName + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", middleName='" + middleName + '\'' +
@@ -111,7 +111,7 @@ public class Person {
 
     public String toJSON(){
         return "{" +
-                "\"ID\": \"" + ID + '\"' +
+                "\"personId\": \"" + personId + '\"' +
                 ", \"lastName\": \"" + lastName + '\"' +
                 ", \"firstName\": \"" + firstName + '\"' +
                 ", \"middleName\": \"" + middleName + '\"' +

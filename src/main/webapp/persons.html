@@ -11,7 +11,7 @@
     <table>
         <tr>
             <td>ID:</td>
-            <td><input id="id" type="text" name="id"></td>
+            <td><input id="id" type="text" name="personId"></td>
         </tr>
         <tr>
             <td>Фамилия:</td>
@@ -46,5 +46,23 @@
     </table>
 </form>
 <div id="resultDiv"></div>
+<form>
+    <table border="1px" rules="cols" id="info_table">
+        <tr>
+            <th>Выбрать</th>
+            <th>ID</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Дата рождения</th>
+            <th>Комментарий</th>
+        </tr>
+        <tbody id="table_data">
+        </tbody>
+    </table>
+    <input id="fill_btn" type="submit" value="Заполнить таблицу"/>
+    <input id="handle_btn" type="submit" value="Обработать данные"/>
+</form>
+
 </body>
 </html>

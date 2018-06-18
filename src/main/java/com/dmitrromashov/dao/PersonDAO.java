@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 @Repository
 public class PersonDAO {
@@ -21,7 +23,7 @@ public class PersonDAO {
     }
 
     public void updatePerson(Person person) {
-        Person updatedPerson = getPerson(person.getID());
+        Person updatedPerson = getPerson(person.getPersonId());
         updatedPerson.setFirstName(person.getFirstName());
         updatedPerson.setLastName(person.getLastName());
         updatedPerson.setBirthDate(person.getBirthDate());
@@ -31,5 +33,10 @@ public class PersonDAO {
 
     public void deletePerson(Integer id) {
         entityManager.remove(getPerson(id));
+    }
+
+    public List<Person> getAllPersons() {
+        String hql = "FROM Person as psn ORDER BY psn.id";
+        return (List<Person>) entityManager.createQuery(hql).getResultList();
     }
 }

@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class PersonController {
     @Autowired
@@ -23,6 +25,7 @@ public class PersonController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/persons",consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public String addPerson(@RequestBody Person person){
+        System.out.println("Person from client: " + person.toJSON());
         int result = personService.addPerson(person);
         if (result == -1){
             return "{\"id_error\": \"yes\"}";
@@ -59,4 +62,12 @@ public class PersonController {
             return "{\"ok\": \"yes\"}";
         }
     }
+
+    @RequestMapping("/persons/fill")
+    public List<Person> fillTable(){
+        List<Person> personList = personService.getAllPersons();
+        return personList;
+    }
+
+
 }

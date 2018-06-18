@@ -9,6 +9,7 @@ jQuery(document).ready(function ($) {
         }
 
         var id = $('#id').val();
+        console.log("form data" + returnArray);
 
         $.ajax({
             headers: {
@@ -47,6 +48,7 @@ jQuery(document).ready(function ($) {
             type: 'GET',
             url: '/persons/' + id,
             success: function (data) {
+                console.log(data);
                 if (data.hasOwnProperty("id_error")){
                     $("#resultDiv").html(" <p> Нет пользователя с таким ID </p>");
                 } else {
@@ -120,6 +122,46 @@ jQuery(document).ready(function ($) {
                 } else {
                     $("#resultDiv").html("<p> Успешно удалён пользователь с ID = " + id + "</p>");
                 }
+
+            },
+            error: function (data) {
+                console.log('An error occurred');
+                console.log(data);
+            }
+
+        })
+    });
+
+    $('#fill_btn').on('click', function () {
+        event.preventDefault();
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data: {},
+            type: 'GET',
+            url: '/persons/fill',
+            success: function (data) {
+                console.log("Fill request successful");
+                console.log(data);
+                var tbody = $('#info_table #table_data');
+                tbody.empty();
+                $.each(data, function (key, person) {
+                    var comment = "";
+                    if (person.comment !== null){
+                        comment = person.comment;
+                    }
+                    tbody.append("<tr> <td> <input type='checkbox'></td>" +
+                        "<td>" + person.personId + "</td>" +
+                        "<td>" + person.lastName + "</td>" +
+                        "<td>" + person.firstName + "</td>" +
+                        "<td>" + person.middleName + "</td>" +
+                        "<td>" + person.birthDate + "</td>" +
+                        "<td>" + comment + "</td>"
+                    )
+                })
 
             },
             error: function (data) {
