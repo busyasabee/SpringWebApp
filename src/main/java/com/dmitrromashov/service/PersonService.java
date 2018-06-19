@@ -49,4 +49,23 @@ public class PersonService {
     public List<Person> getAllPersons() {
         return personDAO.getAllPersons();
     }
+
+    public String handlePersons(List<Integer> ids) {
+        String json = "{\"ids\": [";
+        for (int i = 0; i < ids.size(); i++) {
+            Integer id = ids.get(i);
+            if (personDAO.handlePerson(id)) {
+                if (i != 0) json = json + ", ";
+                json = json + "{\"id\": " + id + ",";
+                json = json + "\"status\": \"good\"}";
+            } else {
+                if (i != 0) json = json + ", ";
+                json = json + "{\"id\": " + id + ",";
+                json = json + "\"status\": \"bad\"}";
+
+            }
+        }
+        json = json + "]}";
+        return json;
+    }
 }

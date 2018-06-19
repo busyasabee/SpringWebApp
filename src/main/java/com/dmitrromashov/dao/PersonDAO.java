@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Transactional
@@ -44,5 +45,19 @@ public class PersonDAO {
     public List<Person> getAllPersons() {
         String hql = "FROM Person as psn ORDER BY psn.id";
         return (List<Person>) entityManager.createQuery(hql).getResultList();
+    }
+
+    public boolean handlePerson(Integer id) {
+        try {
+            Person person = entityManager.find(Person.class, id);
+            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+            String comment = "Обработано " + currentTime.toString();
+            person.setComment(comment);
+            person.setUpdateDate(currentTime);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+
     }
 }

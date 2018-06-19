@@ -70,4 +70,12 @@ public class PersonController {
     }
 
 
+    @RequestMapping(method = RequestMethod.GET, value = "/persons/handle")
+    public String handleTable(@RequestParam(value = "ids[]") List<Integer> ids){
+        String result = personService.handlePersons(ids);
+        System.out.println("Result = " + result);
+        return result;
+    }
+
+
 }

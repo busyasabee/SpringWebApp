@@ -155,7 +155,7 @@ jQuery(document).ready(function ($) {
                         comment = person.comment;
                     }
                     tbody.append("<tr> <td> <input type='checkbox'></td>" +
-                        "<td>" + person.personId + "</td>" +
+                        "<td class='td_id'>" + person.personId + "</td>" +
                         "<td>" + person.lastName + "</td>" +
                         "<td>" + person.firstName + "</td>" +
                         "<td>" + person.middleName + "</td>" +
@@ -171,5 +171,46 @@ jQuery(document).ready(function ($) {
             }
 
         })
+    });
+
+    $('#handle_btn').on('click', function () {
+        event.preventDefault();
+        var trs = $("tr:has(input:checked) td.td_id");
+        console.log("trs " + trs);
+
+        var ids = [];
+        trs.each(function(){
+            ids.push($(this).html());
+        });
+
+        var dataObj = {};
+        dataObj["ids[]"] = ids;
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data: dataObj,
+            type: 'GET',
+            url: '/persons/handle',
+            success: function (data) {
+                var results = data.ids;
+                $("#table_div").empty();
+                results.forEach(function(item, i, arr) {
+                    if (item.status == "good"){
+                        $("#table_div").append("<p> Успешно обработан пользователь с ID = " + item.id  + "</p>");
+                    } else {
+                        $("#table_div").append("<p> Не удалось обработать пользователя с ID = " + item.id  + "</p>");
+                    }
+                });
+            },
+            error: function (data) {
+                console.log('An error occurred');
+                console.log(data);
+            }
+
+        })
+
     });
 });
