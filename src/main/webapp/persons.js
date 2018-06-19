@@ -20,10 +20,11 @@ jQuery(document).ready(function ($) {
             type: 'POST',
             url: '/persons',
             success: function (data) {
+
                 if (data.hasOwnProperty("id_error")){
                     $("#resultDiv").html(" <p> Пользователь с таким ID уже существует</p>");
                 } else {
-                    $("#resultDiv").html("  <p> Успешно добавлен пользователь с ID = " + id + " </p>");
+                    $("#resultDiv").html("  <p> Успешно добавлен пользователь с ID = " + data.person_id + " </p>");
                 }
             },
             error: function (data) {

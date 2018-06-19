@@ -30,7 +30,7 @@ public class PersonController {
         if (result == -1){
             return "{\"id_error\": \"yes\"}";
         } else {
-            return person.toJSON();
+            return  "{\"person_id\": " + result + "}";
         }
     }
 

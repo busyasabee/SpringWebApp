@@ -14,8 +14,14 @@ public class PersonDAO {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public void addPerson(Person person){
+    public int addPerson(Person person){
+        if(person.getPersonId() == 0){
+            String hql = "FROM Person as psn ORDER BY psn.id DESC";
+            Person lastPerson = (Person) entityManager.createQuery(hql).getResultList().get(0);
+            person.setPersonId(lastPerson.getPersonId() + 1);
+        }
         entityManager.persist(person);
+        return person.getPersonId();
     }
 
     public Person getPerson(Integer id) {

@@ -13,13 +13,13 @@ public class PersonService {
     private PersonDAO personDAO;
 
     public int addPerson(Person person) {
+
         try {
-            personDAO.addPerson(person);
+            return personDAO.addPerson(person);
         } catch (Exception e){
             e.printStackTrace();
             return -1;
         }
-        return 0;
     }
 
     public Person getPerson(Integer id){
