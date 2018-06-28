@@ -72,7 +72,7 @@ public class Person {
         this.lastName = lastName;
     }
 
-    public String getFirstName() {
+    final public String getFirstName() {
         return firstName;
     }
 
