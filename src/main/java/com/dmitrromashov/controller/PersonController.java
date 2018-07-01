@@ -2,6 +2,7 @@ package com.dmitrromashov.controller;
 
 import com.dmitrromashov.model.Person;
 import com.dmitrromashov.model.PersonResponseBody;
+import com.dmitrromashov.model.TableResponseBody;
 import com.dmitrromashov.service.PersonService;
 import com.dmitrromashov.validator.PersonValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +25,14 @@ public class PersonController {
         binder.addValidators(validator);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/persons", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, value = "/persons")
     public ResponseEntity<PersonResponseBody> addPerson(@RequestBody Person person) {
-        System.out.println("Person from client: " + person.toJSON());
         PersonResponseBody responseBody = new PersonResponseBody();
         int result = personService.addPerson(person);
         if (result != -1) {
-            responseBody.setMessage("ok");
             responseBody.setPersonId(result);
             return ResponseEntity.ok(responseBody);
         } else {
-            responseBody.setMessage("Пользователь с таким ID уже существует");
             return ResponseEntity.badRequest().body(responseBody);
         }
     }
@@ -56,7 +54,7 @@ public class PersonController {
 
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/persons/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.PUT, value = "/persons/{id}")
     public ResponseEntity<PersonResponseBody> updatePerson(@RequestBody Person person, @PathVariable int id) {
         PersonResponseBody responseBody = new PersonResponseBody();
         int result = personService.updatePerson(person);
@@ -87,10 +85,9 @@ public class PersonController {
 
 
     @RequestMapping(method = RequestMethod.GET, value = "/persons/handle")
-    public String handleTable(@RequestParam(value = "ids[]") List<Integer> ids) {
-        String result = personService.handlePersons(ids);
-        System.out.println("Result = " + result);
-        return result;
+    public ResponseEntity<TableResponseBody> handleTable(@RequestParam(value = "ids[]") List<Integer> ids) {
+        TableResponseBody responseBody = personService.handlePersons(ids);
+        return ResponseEntity.ok(responseBody);
     }
 
 }

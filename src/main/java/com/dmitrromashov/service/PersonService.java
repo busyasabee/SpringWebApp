@@ -2,9 +2,11 @@ package com.dmitrromashov.service;
 
 import com.dmitrromashov.dao.PersonDAO;
 import com.dmitrromashov.model.Person;
+import com.dmitrromashov.model.TableResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -50,22 +52,21 @@ public class PersonService {
         return personDAO.getAllPersons();
     }
 
-    public String handlePersons(List<Integer> ids) {
-        String json = "{\"ids\": [";
-        json = json + "]}";
+    public TableResponseBody handlePersons(List<Integer> ids) {
+        TableResponseBody responseBody = new TableResponseBody();
+        String[] statuses = new String[ids.size()];
+
         for (int i = 0; i < ids.size(); i++) {
             Integer id = ids.get(i);
             if (personDAO.handlePerson(id)) {
-                if (i != 0) json = json + ", ";
-                json = json + "{\"id\": " + id + ",";
-                json = json + "\"status\": \"good\"}";
+                statuses[i] = "good";
             } else {
-                if (i != 0) json = json + ", ";
-                json = json + "{\"id\": " + id + ",";
-                json = json + "\"status\": \"bad\"}";
-
+                statuses[i] = "bad";
             }
         }
-        return json;
+
+        responseBody.setIds(ids);
+        responseBody.setStatuses(statuses);
+        return responseBody;
     }
 }

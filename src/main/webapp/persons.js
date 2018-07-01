@@ -179,15 +179,19 @@ jQuery(document).ready(function ($) {
             type: 'GET',
             url: '/persons/handle',
             success: function (data) {
-                var results = data.ids;
+                console.log("data :");
+                console.log(data);
+                var statuses = data.statuses;
+                var ids = data.ids;
                 $("#table_div").empty();
-                results.forEach(function(item, i, arr) {
-                    if (item.status == "good"){
-                        $("#table_div").append("<p> Успешно обработан пользователь с ID = " + item.id  + "</p>");
+                $.each(statuses, function (index, value) {
+                    if (value === "good"){
+                        $("#table_div").append("<p> Успешно обработан пользователь с ID = " + ids[index]  + "</p>");
                     } else {
-                        $("#table_div").append("<p> Не удалось обработать пользователя с ID = " + item.id  + "</p>");
+                        $("#table_div").append("<p> Не удалось обработать пользователя с ID = " + ids[index] + "</p>");
                     }
                 });
+
             },
             error: function (data) {
                 console.log('An error occurred');
