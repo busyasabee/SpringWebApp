@@ -1,15 +1,14 @@
 jQuery(document).ready(function ($) {
 
-    $('#addbtn').on('click', function () {
+    $('#addBtn').on('click', function () {
         event.preventDefault();
         var returnArray = {};
-        var formArray = $('#personform').serializeArray();
+        var formArray = $('#personForm').serializeArray();
         for (var i = 0; i < formArray.length; i++) {
             returnArray[formArray[i]['name']] = formArray[i]['value'];
         }
 
-        var id = $('#id').val();
-        console.log("form data" + returnArray);
+        var id = $('#personId').val();
 
         $.ajax({
             headers: {
@@ -20,25 +19,21 @@ jQuery(document).ready(function ($) {
             type: 'POST',
             url: '/persons',
             success: function (data) {
+                var personId = data.personId;
+                $("#resultDiv").html("  <p> Успешно добавлен пользователь с ID = " + personId + " </p>");
 
-                if (data.hasOwnProperty("id_error")){
-                    $("#resultDiv").html(" <p> Пользователь с таким ID уже существует</p>");
-                } else {
-                    $("#resultDiv").html("  <p> Успешно добавлен пользователь с ID = " + data.person_id + " </p>");
-                }
             },
             error: function (data) {
-                console.log('An error occurred');
-                console.log(data);
+                $("#resultDiv").html(" <p> Пользователь с таким ID уже существует</p>");
             }
 
         })
 
     });
-    $('#getbtn').on('click', function () {
+    $('#getBtn').on('click', function () {
         event.preventDefault();
 
-        var id = $('#id').val();
+        var id = $('#personId').val();
 
         $.ajax({
             headers: {
@@ -49,36 +44,33 @@ jQuery(document).ready(function ($) {
             type: 'GET',
             url: '/persons/' + id,
             success: function (data) {
-                console.log(data);
-                if (data.hasOwnProperty("id_error")){
-                    $("#resultDiv").html(" <p> Нет пользователя с таким ID </p>");
-                } else {
-                    $("#resultDiv").html("  <p> Успешно получен пользователь с ID " +
-                        + id
-                        + ", фамилией " + data.lastName
-                        + ", именем " + data.firstName
-                        + ", отчеством " + data.middleName
-                        + ", датой рождения " + data.birthDate + " </p>");
-                }
+                var person = data.person;
+                $("#resultDiv").html("<p> Успешно получен пользователь с ID " +
+                    + person.personId
+                    + ", фамилией " + person.lastName
+                    + ", именем " + person.firstName
+                    + ", отчеством " + person.middleName
+                    + ", датой рождения " + person.birthDate + " </p>");
 
             },
             error: function (data) {
-                console.log('An error occurred');
-                console.log(data);
+                var message = data.responseJSON.message;
+                $("#resultDiv").html(" <p>" + message +  "</p>");
+
             }
 
         })
     });
 
-    $('#updatebtn').on('click', function () {
+    $('#updateBtn').on('click', function () {
         event.preventDefault();
         var returnArray = {};
-        var formArray = $('#personform').serializeArray();
+        var formArray = $('#personForm').serializeArray();
         for (var i = 0; i < formArray.length; i++) {
             returnArray[formArray[i]['name']] = formArray[i]['value'];
         }
 
-        var id = $('#id').val();
+        var id = $('#personId').val();
 
         $.ajax({
             headers: {
@@ -89,25 +81,20 @@ jQuery(document).ready(function ($) {
             type: 'PUT',
             url: '/persons/' + id,
             success: function (data) {
-                if (data.hasOwnProperty("id_error")){
-                    $("#resultDiv").html(" <p> Нет пользователя с таким ID </p>");
-                } else {
-                    $("#resultDiv").html("<p> Успешно обновлён пользователь с ID = " + id  + "</p>");
-                }
+                $("#resultDiv").html("<p> Успешно обновлён пользователь с ID = " + id  + "</p>");
             },
             error: function (data) {
-                console.log('An error occurred');
-                console.log(data);
+                $("#resultDiv").html(" <p> Нет пользователя с таким ID </p>");
             }
 
         })
 
     });
 
-    $('#deletebtn').on('click', function () {
+    $('#deleteBtn').on('click', function () {
         event.preventDefault();
 
-        var id = $('#id').val();
+        var id = $('#personId').val();
 
         $.ajax({
             headers: {
@@ -118,22 +105,19 @@ jQuery(document).ready(function ($) {
             type: 'DELETE',
             url: '/persons/' + id,
             success: function (data) {
-                if (data.hasOwnProperty("id_error")){
-                    $("#resultDiv").html(" <p> Нет пользователя с таким ID </p>");
-                } else {
-                    $("#resultDiv").html("<p> Успешно удалён пользователь с ID = " + id + "</p>");
-                }
+                $("#resultDiv").html("<p> Успешно удалён пользователь с ID = " + id  + "</p>");
 
             },
             error: function (data) {
                 console.log('An error occurred');
                 console.log(data);
+                $("#resultDiv").html(" <p> Нет пользователя с таким ID </p>");
             }
 
         })
     });
 
-    $('#fill_btn').on('click', function () {
+    $('#fillBtn').on('click', function () {
         event.preventDefault();
 
         $.ajax({
@@ -147,7 +131,7 @@ jQuery(document).ready(function ($) {
             success: function (data) {
                 console.log("Fill request successful");
                 console.log(data);
-                var tbody = $('#info_table #table_data');
+                var tbody = $('#infoTable #tableData');
                 tbody.empty();
                 $.each(data, function (key, person) {
                     var comment = "";
@@ -155,7 +139,7 @@ jQuery(document).ready(function ($) {
                         comment = person.comment;
                     }
                     tbody.append("<tr> <td> <input type='checkbox'></td>" +
-                        "<td class='td_id'>" + person.personId + "</td>" +
+                        "<td class='tdId'>" + person.personId + "</td>" +
                         "<td>" + person.lastName + "</td>" +
                         "<td>" + person.firstName + "</td>" +
                         "<td>" + person.middleName + "</td>" +
@@ -173,9 +157,9 @@ jQuery(document).ready(function ($) {
         })
     });
 
-    $('#handle_btn').on('click', function () {
+    $('#handleBtn').on('click', function () {
         event.preventDefault();
-        var trs = $("tr:has(input:checked) td.td_id");
+        var trs = $("tr:has(input:checked) td.tdId");
         console.log("trs " + trs);
 
         var ids = [];

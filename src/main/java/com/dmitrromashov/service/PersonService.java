@@ -52,6 +52,7 @@ public class PersonService {
 
     public String handlePersons(List<Integer> ids) {
         String json = "{\"ids\": [";
+        json = json + "]}";
         for (int i = 0; i < ids.size(); i++) {
             Integer id = ids.get(i);
             if (personDAO.handlePerson(id)) {
@@ -65,7 +66,6 @@ public class PersonService {
 
             }
         }
-        json = json + "]}";
         return json;
     }
 }

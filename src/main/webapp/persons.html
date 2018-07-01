@@ -7,11 +7,11 @@
     <script src="persons.js"></script>
 </head>
 <body>
-<form id="personform" name="personform">
+<form id="personForm" name="personform">
     <table>
         <tr>
             <td>ID:</td>
-            <td><input id="id" type="text" name="personId"></td>
+            <td><input id="personId" type="text" name="personId"></td>
         </tr>
         <tr>
             <td>Фамилия:</td>
@@ -32,22 +32,22 @@
         <input id="comment" type="hidden" name="comment" value="">
         <input id="updateDate" type="hidden" name="updateDate" value="">
         <tr>
-            <td><input id="addbtn" type="submit" value="Добавить" /></td>
+            <td><input id="addBtn" type="submit" value="Добавить" /></td>
         </tr>
         <tr>
-            <td><input id="getbtn" type="submit" value="Получить" /></td>
+            <td><input id="getBtn" type="submit" value="Получить" /></td>
         </tr>
         <tr>
-            <td><input id="updatebtn" type="submit" value="Обновить" /></td>
+            <td><input id="updateBtn" type="submit" value="Обновить" /></td>
         </tr>
         <tr>
-            <td><input id="deletebtn" type="submit" value="Удалить" /></td>
+            <td><input id="deleteBtn" type="submit" value="Удалить" /></td>
         </tr>
     </table>
 </form>
 <div id="resultDiv"></div>
-<form id="table_form">
-    <table border="1px" rules="cols" id="info_table">
+<form id="tableForm">
+    <table border="1px" rules="cols" id="infoTable">
         <tr>
             <th>Выбрать</th>
             <th>ID</th>
@@ -57,11 +57,11 @@
             <th>Дата рождения</th>
             <th>Комментарий</th>
         </tr>
-        <tbody id="table_data">
+        <tbody id="tableData">
         </tbody>
     </table>
-    <input id="fill_btn" type="submit" value="Заполнить таблицу"/>
-    <input id="handle_btn" type="submit" value="Обработать данные"/>
+    <input id="fillBtn" type="submit" value="Заполнить таблицу"/>
+    <input id="handleBtn" type="submit" value="Обработать данные"/>
 </form>
 <div id="table_div"></div>
 </body>
