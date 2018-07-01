@@ -168,7 +168,7 @@ jQuery(document).ready(function ($) {
         });
 
         var dataObj = {};
-        dataObj["ids[]"] = ids;
+        dataObj["ids"] = ids;
 
         $.ajax({
             headers: {
