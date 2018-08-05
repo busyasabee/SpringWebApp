@@ -3,6 +3,7 @@ package com.dmitrromashov.service;
 import com.dmitrromashov.dao.PersonDAO;
 import com.dmitrromashov.model.Person;
 import com.dmitrromashov.model.TableResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
 public class PersonService {
     private PersonDAO personDAO;
 
+    @Autowired
     public PersonService(PersonDAO personDAO){
         this.personDAO = personDAO;
     }

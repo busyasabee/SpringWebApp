@@ -109,8 +109,6 @@ jQuery(document).ready(function ($) {
 
             },
             error: function (data) {
-                console.log('An error occurred');
-                console.log(data);
                 $("#resultDiv").html(" <p> Нет пользователя с таким ID </p>");
             }
 
@@ -148,12 +146,7 @@ jQuery(document).ready(function ($) {
                     )
                 })
 
-            },
-            error: function (data) {
-                console.log('An error occurred');
-                console.log(data);
             }
-
         })
     });
 
@@ -191,14 +184,7 @@ jQuery(document).ready(function ($) {
                         $("#table_div").append("<p> Не удалось обработать пользователя с ID = " + ids[index] + "</p>");
                     }
                 });
-
-            },
-            error: function (data) {
-                console.log('An error occurred');
-                console.log(data);
             }
-
         })
-
     });
 });

@@ -15,11 +15,10 @@ import java.util.List;
 
 @RestController
 public class PersonController {
-//    @Autowired
     private PersonService personService;
-//    @Autowired
     private PersonValidator validator;
 
+    @Autowired
     public PersonController(PersonService personService, PersonValidator personValidator){
         this.personService = personService;
         this.validator = personValidator;
