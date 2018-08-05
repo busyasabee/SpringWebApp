@@ -3,16 +3,16 @@ package com.dmitrromashov.service;
 import com.dmitrromashov.dao.PersonDAO;
 import com.dmitrromashov.model.Person;
 import com.dmitrromashov.model.TableResponseBody;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PersonService {
-    @Autowired
     private PersonDAO personDAO;
+
+    public PersonService(PersonDAO personDAO){
+        this.personDAO = personDAO;
+    }
 
     public int addPerson(Person person) {
 

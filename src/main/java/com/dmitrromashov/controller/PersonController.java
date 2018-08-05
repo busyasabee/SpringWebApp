@@ -15,10 +15,15 @@ import java.util.List;
 
 @RestController
 public class PersonController {
-    @Autowired
+//    @Autowired
     private PersonService personService;
-    @Autowired
+//    @Autowired
     private PersonValidator validator;
+
+    public PersonController(PersonService personService, PersonValidator personValidator){
+        this.personService = personService;
+        this.validator = personValidator;
+    }
 
     @InitBinder
     protected void initBinder(final WebDataBinder binder) {

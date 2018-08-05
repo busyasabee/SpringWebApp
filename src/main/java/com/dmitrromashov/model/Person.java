@@ -18,8 +18,6 @@ public class Person {
     private String middleName;
     @Column(name="birth_date")
     private Date birthDate;
-    // Можно бы было сделать отдельную сущность PersonDb для работы с базой
-    // но это бы могло вносить путаницу
     @Column(name="comment")
     private String comment;
     @Column(name="update_date")
@@ -106,18 +104,6 @@ public class Person {
                 ", birthDate=" + birthDate +
                 ", comment='" + comment + '\'' +
                 ", updateDate=" + updateDate +
-                '}';
-    }
-
-    public String toJSON(){
-        return "{" +
-                "\"personId\": \"" + personId + '\"' +
-                ", \"lastName\": \"" + lastName + '\"' +
-                ", \"firstName\": \"" + firstName + '\"' +
-                ", \"middleName\": \"" + middleName + '\"' +
-                ", \"birthDate\": \"" + birthDate + '\"' +
-                ", \"comment\": \"" + comment + '\"' +
-                ", \"updateDate\": \"" + updateDate + '\"' +
                 '}';
     }
 }

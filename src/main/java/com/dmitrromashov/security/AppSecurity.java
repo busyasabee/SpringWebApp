@@ -14,6 +14,5 @@ public class AppSecurity extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll();
-
     }
 }
